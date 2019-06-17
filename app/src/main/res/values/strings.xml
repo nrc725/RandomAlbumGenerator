@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">AlbumOfTheDay</string>
+
+    <!--String Names: activity_album.xml-->
+    <string name="openInSpotifyButton">Open in Spotify</string>
+    <string name="findNewAlbumButton">Find A New Album</string>
+
+    <!--String Names: activity_main.xml-->
+    <string name="loginButton">Login</string>
+
+    <!--String Names: activity_menu.xml-->
+    <string name="selectGenreTextView">Select a Genre</string>
 </resources>

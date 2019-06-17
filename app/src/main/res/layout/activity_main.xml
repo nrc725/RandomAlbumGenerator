@@ -26,7 +26,7 @@
         android:layout_marginEnd="148dp"
         android:layout_marginRight="148dp"
         android:layout_marginBottom="62dp"
-        android:text="Login"
+        android:text="@string/loginButton"
         android:onClick="directToLoginActivity"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"

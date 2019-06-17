@@ -15,7 +15,7 @@
         android:layout_marginTop="33dp"
         android:layout_marginEnd="54dp"
         android:layout_marginRight="54dp"
-        android:text="Select a Genre"
+        android:text="@string/selectGenreTextView"
         android:textSize="30sp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"

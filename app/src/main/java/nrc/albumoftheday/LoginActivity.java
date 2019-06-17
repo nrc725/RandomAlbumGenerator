@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String CLIENT_ID = "e5afc7c1b0274c258089878b5cfbae74";
     private static final String REDIRECT_URI = "http://localhost:8888/callback";
-    private SpotifyAppRemote mSpotifyAppRemote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

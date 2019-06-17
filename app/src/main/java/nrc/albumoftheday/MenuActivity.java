@@ -9,21 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.spotify.android.appremote.api.ConnectionParams;
-import com.spotify.android.appremote.api.Connector;
-import com.spotify.android.appremote.api.ImagesApi;
-import com.spotify.android.appremote.api.SpotifyAppRemote;
-
-import com.spotify.protocol.client.CallResult;
-import com.spotify.protocol.client.Subscription;
-import com.spotify.protocol.types.Album;
-import com.spotify.protocol.types.Image;
-import com.spotify.protocol.types.ImageUri;
-import com.spotify.protocol.types.PlayerState;
-import com.spotify.protocol.types.Track;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,14 +32,10 @@ public class MenuActivity extends AppCompatActivity {
     //select a random playlist, then a random track from playlist
     //use artist id from playlist to select a random album from artist
 
-    private static final String CLIENT_ID = "e5afc7c1b0274c258089878b5cfbae74";
-    private static final String REDIRECT_URI = "http://localhost:8888/callback";
-    private SpotifyAppRemote mSpotifyAppRemote;
     ImageView imageView;
     Button button;
     String token;
     Bundle extras;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +49,9 @@ public class MenuActivity extends AppCompatActivity {
 
     //Gets a random playlist that is associated with the genre that was selected
     public void genreButtonPress(View view) {
+        button.setEnabled(false);
         Random random = new Random();
         final String URL = "https://api.spotify.com/v1/browse/categories/rock/playlists?country=US&limit=1&offset=" + random.nextInt(10);
-
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
                 new Response.Listener<JSONObject>()
@@ -81,11 +62,9 @@ public class MenuActivity extends AppCompatActivity {
                         //Tries to get the playlist uri from the jsonobject
                         try {
                             JSONObject json = response.getJSONObject("playlists");
-                            //System.out.println(json.toString());
                             JSONObject object = new JSONObject(json.toString());
                             JSONArray Jarray  = object.getJSONArray("items");
                             JSONObject Jasonobject = Jarray.getJSONObject(0);
-                            //System.out.println(Jasonobject.toString());
                             String id = Jasonobject.getString("id");
                             Log.d("Playlist ID Code",id);
                             selectPlaylistTrack(id);
@@ -118,7 +97,7 @@ public class MenuActivity extends AppCompatActivity {
     public void selectPlaylistTrack(String playlistURI)
     {
         Random random = new Random();
-        final String URL ="https://api.spotify.com/v1/playlists/"+ playlistURI +"/tracks?market=US&fields=items(track(name%2Cartists))&limit=1&offset=" + (random.nextInt(5)+1);
+        final String URL ="https://api.spotify.com/v1/playlists/"+ playlistURI +"/tracks?market=US&fields=items(track(name%2Cartists))&limit=1&offset=" + (random.nextInt(10)+1);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
@@ -127,9 +106,9 @@ public class MenuActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println(response.toString());
+                        Log.d("Playlist Track Response", response.toString());
                         try {
-                            //takes jsonobject and unwraps it to get to the artist uri
+                            //takes jsonobject and unwraps it to get to the artist uri and logs it
                             JSONArray jarray = response.getJSONArray("items");
                             JSONObject object = jarray.getJSONObject(0);
                             JSONObject object2 = object.getJSONObject("track");
@@ -166,7 +145,7 @@ public class MenuActivity extends AppCompatActivity {
     public void selectArtistAlbum(String artistURI)
     {
         Random random = new Random();
-        final String URL ="https://api.spotify.com/v1/artists/" + artistURI + "/albums?market=US&limit=1&offset=" + (random.nextInt(3)+1);
+        final String URL ="https://api.spotify.com/v1/artists/" + artistURI + "/albums?market=US&limit=1&offset=" + (random.nextInt(10)+1);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
@@ -175,15 +154,14 @@ public class MenuActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println(response.toString());
-                        try {
+                       Log.d("Artist Album Response", response.toString());
+                       try {
                             //takes jsonobject and unwraps it to get to the album uri
                             JSONArray jarray = response.getJSONArray("items");
-                            System.out.println("1: " + jarray.toString());
                             JSONObject object = jarray.getJSONObject(0);
                             String albumURI = object.getString("id");
                             Log.d("Album URI", albumURI);
-                            showAlbumPage(albumURI);
+                            getAlbumInfo(albumURI);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -202,6 +180,64 @@ public class MenuActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Authorization", "Bearer " + token);
+                return params;
+            }
+        };
+        queue.add(getRequest);
+    }
+
+    public void getAlbumInfo(String albumURI)
+    {
+        final String URL ="https://api.spotify.com/v1/albums/" + albumURI + "?market=US";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
+                new Response.Listener<JSONObject>()
+                {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Get Album Info Response", response.toString());
+                        try {
+                            //takes jsonobject and unwraps it to get to the artist uri
+                            JSONArray jarray = response.getJSONArray("images");
+
+                            //Gets the album url from the jsonobject
+                            JSONObject object = jarray.getJSONObject(0);
+                            String albumURL = object.getString("url");
+
+                            //Gets redirecturl from json object
+                            JSONObject object2 = response.getJSONObject("external_urls");
+                            String albumRedirectURL = object2.getString("spotify");
+
+                            //Gets name of artist from json response
+                            JSONArray artistArray = response.getJSONArray("artists");
+                            JSONObject artistObject = artistArray.getJSONObject(0);
+                            String artistName = artistObject.getString("name");
+                            String albumName = response.getString("name");
+
+                            //Logs albumUrl/redirectURL and sends info to album page to display
+                            Log.d("Artist Name", artistName);
+                            Log.d("Album Name", albumName);
+                            Log.d("Album URL", albumURL);
+                            Log.d("Album Redirect URL", albumRedirectURL);
+                            showAlbumPage(albumURI,albumURL, albumRedirectURL, albumName, artistName);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("ERROR","error => "+error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders(){
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + token);
 
                 return params;
             }
@@ -209,10 +245,16 @@ public class MenuActivity extends AppCompatActivity {
         queue.add(getRequest);
     }
 
-    public void showAlbumPage(String albumURI)
+    //Passes all important info to the page to display the album
+    public void showAlbumPage(String albumURI, String albumURL, String albumRedirectURL, String albumName, String artistName)
     {
+        //Puts parameters in bundle to send to next page
         extras.putString("AUTHENTICATION", token);
         extras.putString("ALBUM_URI", albumURI);
+        extras.putString("ALBUM_URL", albumURL);
+        extras.putString("ALBUM_REDIRECT_URL", albumRedirectURL);
+        extras.putString("ALBUM_NAME", albumName);
+        extras.putString("ARTIST_NAME", artistName);
         Intent intent = new Intent(this, AlbumActivity.class);
         intent.putExtras(extras);
         startActivity(intent);
