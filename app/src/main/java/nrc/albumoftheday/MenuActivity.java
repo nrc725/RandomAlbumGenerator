@@ -3,6 +3,8 @@ package nrc.albumoftheday;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,33 +27,50 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements GenreAdapterInterface{
 
     //Have user select a genre of music they want to listen to
     //generate the playlists associated with that category of music
     //select a random playlist, then a random track from playlist
     //use artist id from playlist to select a random album from artist
 
-    ImageView imageView;
-    Button button;
-    String token;
-    Bundle extras;
+    private String token;
+    private Bundle extras;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private GenreAdapterInterface gai;
+
+    private String[] genreList = {"Rock","Hip Hop","Pop", "Summer","Country","Metal","Workout", "Party","Classical","Jazz", "Gaming","Funk", "Punk"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         extras = getIntent().getExtras();
-        imageView = (ImageView) findViewById(R.id.imageView1);
-        button = (Button) findViewById(R.id.button1);
+        recyclerView = (RecyclerView) findViewById(R.id.genreSelectionList);
         token = extras.getString("AUTHENTICATION");
+
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        gai = new GenreAdapterInterface()
+        {
+            @Override
+            public void moveToGenreButtonPress(int position) {
+                genreButtonPress(position);
+            }
+        };
+        mAdapter = new GenreAdapter(genreList, gai);
+        recyclerView.setAdapter(mAdapter);
     }
 
     //Gets a random playlist that is associated with the genre that was selected
-    public void genreButtonPress(View view) {
-        button.setEnabled(false);
+    public void genreButtonPress(int position)
+    {
+        String genre = genreList[position].replaceAll("\\s+","");
         Random random = new Random();
-        final String URL = "https://api.spotify.com/v1/browse/categories/rock/playlists?country=US&limit=1&offset=" + random.nextInt(10);
+        final String URL = "https://api.spotify.com/v1/browse/categories/" + genre.toLowerCase() + "/playlists?country=US&limit=1&offset=" + random.nextInt(10);
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
                 new Response.Listener<JSONObject>()
@@ -260,4 +279,8 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void moveToGenreButtonPress(int position) {
+        genreButtonPress(position);
+    }
 }
