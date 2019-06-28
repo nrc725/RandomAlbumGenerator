@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundBlack">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,6 +16,7 @@
         android:layout_marginTop="28dp"
         android:layout_marginEnd="81dp"
         android:layout_marginRight="81dp"
+        android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,52 +24,54 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="163dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="111dp"
-        android:layout_marginLeft="111dp"
-        android:layout_marginTop="78dp"
+        android:layout_width="214dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="110dp"
         android:layout_marginRight="110dp"
-        android:text="@string/openInSpotifyButton"
+        android:background="@color/spotifyGreen"
         android:onClick="directToAlbumPage"
+        android:text="@string/openInSpotifyButton"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        tools:text="Open in Spotify" />
+        app:layout_constraintTop_toBottomOf="@+id/albumSelection" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="166dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="111dp"
-        android:layout_marginLeft="111dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="107dp"
-        android:layout_marginRight="107dp"
-        android:text="@string/findNewAlbumButton"
+        android:layout_width="214dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginRight="110dp"
+        android:background="@color/spotifyGreen"
         android:onClick="directToMenuPage"
+        android:text="@string/findNewAlbumButton"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <TextView
         android:id="@+id/albumSelection"
-        android:layout_width="302dp"
-        android:layout_height="37dp"
+        android:layout_width="303dp"
+        android:layout_height="60dp"
         android:layout_marginStart="82dp"
         android:layout_marginLeft="82dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="83dp"
         android:layout_marginRight="83dp"
-        android:layout_marginBottom="28dp"
-        android:textColor="@android:color/background_dark"
-        android:textSize="24sp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:textColor="@color/white"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 </android.support.constraint.ConstraintLayout>

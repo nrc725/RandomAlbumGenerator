@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AlbumOfTheDay</string>
+    <string name="app_name">Random Album Generator</string>
 
     <!--String Names: activity_album.xml-->
     <string name="openInSpotifyButton">Open in Spotify</string>
