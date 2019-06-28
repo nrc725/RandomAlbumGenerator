@@ -6,16 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-
-import com.android.volley.AuthFailureError;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,12 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MenuActivity extends AppCompatActivity implements GenreAdapterInterface{
-
-    //Have user select a genre of music they want to listen to
-    //generate the playlists associated with that category of music
-    //select a random playlist, then a random track from playlist
-    //use artist id from playlist to select a random album from artist
+public class MenuActivity extends AppCompatActivity implements GenreAdapterInterface
+{
 
     private String token;
     private Bundle extras;

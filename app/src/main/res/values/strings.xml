@@ -7,6 +7,9 @@
 
     <!--String Names: activity_main.xml-->
     <string name="loginButton">Login</string>
+    <string name="welcomeText">Welcome to the Random Album Generator!</string>
+    <string name="moreDescriptionText">Let Spotify Find Your Next Favorite Album!</string>
+    <string name="evenMoreText">Select a Genre or One of Your Spotify Playlists to Find a Album!</string>>
 
     <!--String Names: activity_menu.xml-->
     <string name="selectGenreTextView">Select a Genre</string>
