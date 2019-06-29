@@ -30,11 +30,15 @@ public class AlbumActivity extends AppCompatActivity
         albumSelection = (TextView) findViewById(R.id.albumSelection);
         imageView = (ImageView) findViewById(R.id.imageView);
         button = (Button) findViewById(R.id.button1);
+
+        //gets items from bundle
         token = extras.getString("AUTHENTICATION");
         albumURL = extras.getString("ALBUM_URL");
         albumRedirectURL = extras.getString("ALBUM_REDIRECT_URL");
         artistName = extras.getString("ARTIST_NAME");
         albumName = extras.getString("ALBUM_NAME");
+
+        //Sets image and text for album
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(albumSelection,5,20, 1, TypedValue.COMPLEX_UNIT_DIP);
         albumSelection.setText(albumName + " by " + artistName);
         Picasso.get().load(albumURL).into(imageView);
@@ -48,7 +52,7 @@ public class AlbumActivity extends AppCompatActivity
 
     public void directToMenuPage(View view)
     {
-        Intent intent = new Intent(this, MenuActivity.class);
+        Intent intent = new Intent(this, GenreActivity.class);
         extras.putString("AUTHENTICATION", token);
         intent.putExtras(extras);
         startActivity(intent);

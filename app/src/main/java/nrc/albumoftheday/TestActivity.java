@@ -19,6 +19,7 @@ import com.spotify.protocol.types.Image;
 import com.spotify.protocol.types.ImageUri;
 import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
+import com.spotify.sdk.android.authentication.SpotifyNativeAuthUtil;
 
 import java.util.Random;
 

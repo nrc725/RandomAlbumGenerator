@@ -18,10 +18,11 @@
         </activity>
         <activity  android:name=".LoginActivity"/>
         <activity  android:name=".TestActivity"/>
-        <activity  android:name=".MenuActivity"/>
+        <activity  android:name=".GenreActivity"  android:label="Select a Genre"/>
         <activity  android:name=".AlbumActivity"/>
-        <activity  android:name="com.spotify.sdk.android.authentication.LoginActivity"
-                   android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity  android:name=".MenuActivity"/>
+        <activity  android:name=".PlaylistActivity" android:label="Select a Playlist"/>
+        <activity  android:name="com.spotify.sdk.android.authentication.LoginActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

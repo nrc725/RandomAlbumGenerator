@@ -11,6 +11,11 @@
     <string name="moreDescriptionText">Let Spotify Find Your Next Favorite Album!</string>
     <string name="evenMoreText">Select a Genre or One of Your Spotify Playlists to Find a Album!</string>>
 
-    <!--String Names: activity_menu.xml-->
+    <!--String Names: activity_genre.xml-->
     <string name="selectGenreTextView">Select a Genre</string>
+
+    <!--String Names: activity_menu.xml-->
+    <string name="selectOptionTextView">Select an Album using:</string>
+    <string name="selectGenre">Genre</string>
+    <string name="selectPlaylist">User Playlist</string>
 </resources>
