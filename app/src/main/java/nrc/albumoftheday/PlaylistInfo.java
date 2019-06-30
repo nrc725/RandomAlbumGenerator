@@ -5,18 +5,21 @@ import android.os.Parcelable;
 
 public class PlaylistInfo implements Parcelable
 {
+    int playlistCount;
     String playlistName, playlistURL, playlistImage;
-    public PlaylistInfo(String playlistName, String playlistURL, String playlistImage)
+    public PlaylistInfo(String playlistName, String playlistURL, String playlistImage, int playlistCount)
     {
         this.playlistName = playlistName;
         this.playlistURL = playlistURL;
         this.playlistImage = playlistImage;
+        this.playlistCount = playlistCount;
     }
 
     protected PlaylistInfo(Parcel in) {
         playlistName = in.readString();
         playlistURL = in.readString();
         playlistImage = in.readString();
+        playlistCount = in.readInt();
     }
 
     public static final Creator<PlaylistInfo> CREATOR = new Creator<PlaylistInfo>() {
@@ -46,6 +49,8 @@ public class PlaylistInfo implements Parcelable
         return playlistImage;
     }
 
+    public int getPlaylistCount(){return playlistCount;}
+
     @Override
     public int describeContents() {
         return 0;
@@ -56,5 +61,6 @@ public class PlaylistInfo implements Parcelable
         dest.writeString(playlistName);
         dest.writeString(playlistURL);
         dest.writeString(playlistImage);
+        dest.writeInt(playlistCount);
     }
 }

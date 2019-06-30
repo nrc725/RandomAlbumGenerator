@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class PlaylistActivity extends AppCompatActivity implements PlaylistAdapterInterface
 {
     private String token;
@@ -61,8 +63,9 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistAdapt
     public void selectPlaylistTrackButtonPress(int position)
     {
         Random random = new Random();
+        int randomNum = random.nextInt(playlistInfos.get(position).getPlaylistCount()) +1;
         final String URL = "https://api.spotify.com/v1/playlists/" + playlistInfos.get(position).getPlaylistURL() +
-                "/tracks?market=US&fields=items(track(name%2Cartists))&limit=1&offset="+ (random.nextInt(50)+1);
+                "/tracks?market=US&fields=items(track(name%2Cartists))&limit=1&offset="+ randomNum;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
@@ -225,6 +228,16 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistAdapt
         Intent intent = new Intent(this, AlbumActivity.class);
         intent.putExtras(extras);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // save data first
+        Intent MainActivityIntent = new Intent(this, MenuActivity.class);
+        extras.putString("AUTHENTICATION", token);
+        MainActivityIntent.putExtras(extras);
+        startActivity(MainActivityIntent);
+        super.onBackPressed();
     }
 
     @Override

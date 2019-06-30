@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +28,7 @@ import org.json.JSONObject;
 
 public class GenreActivity extends AppCompatActivity implements GenreAdapterInterface
 {
-
+    private int playlistCount;
     private String token;
     private Bundle extras;
     private RecyclerView recyclerView;
@@ -64,6 +66,7 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
         recyclerView.setLayoutManager(layoutManager);
         gai = new GenreAdapterInterface()
         {
+
             @Override
             public void moveToGenreButtonPress(int position) {
                 genreButtonPress(position);
@@ -93,7 +96,10 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
                             JSONArray Jarray  = object.getJSONArray("items");
                             JSONObject Jasonobject = Jarray.getJSONObject(0);
                             String id = Jasonobject.getString("id");
+                            JSONObject object3 =  Jasonobject.getJSONObject("tracks");
+                            playlistCount = object3.getInt("total");
                             Log.d("Playlist ID Code",id);
+                            Log.d("Playlist Song Count", playlistCount+"");
                             selectPlaylistTrack(id);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -124,7 +130,8 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
     public void selectPlaylistTrack(String playlistURI)
     {
         Random random = new Random();
-        final String URL ="https://api.spotify.com/v1/playlists/"+ playlistURI +"/tracks?market=US&fields=items(track(name%2Cartists))&limit=1&offset=" + (random.nextInt(10)+1);
+        int randomNum = random.nextInt(playlistCount) +1;
+        final String URL ="https://api.spotify.com/v1/playlists/"+ playlistURI +"/tracks?market=US&fields=items(track(name%2Cartists))&limit=1&offset=" + randomNum;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
@@ -169,11 +176,11 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
         queue.add(getRequest);
     }
 
-    //FOR THIS MAY WANT TO CONSIDER INCREASING LIMIT TO GET MULTIPLE ALBUMS IN CASE ONE IS SINGLE
+    //IF THE OFFSET IS TOO LARGE IT WILL NOT SHOW AN ALBUM, SPOTIFY DOESNT KEEP ALBUM COUNTS FOR ARTISTS SO I CANT CHECK TO MAKE SURE THIS CAN BE PREVENTED
     public void selectArtistAlbum(String artistURI)
     {
         Random random = new Random();
-        final String URL ="https://api.spotify.com/v1/artists/" + artistURI + "/albums?market=US&limit=1&offset=" + (random.nextInt(10)+1);
+        final String URL ="https://api.spotify.com/v1/artists/" + artistURI + "/albums?include_groups=album&market=US&limit=1&offset=" + (random.nextInt(5)+1);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
@@ -191,6 +198,7 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
                             Log.d("Album URI", albumURI);
                             getAlbumInfo(albumURI);
                         } catch (JSONException e) {
+                           Toast.makeText(GenreActivity.this, "Error Getting Album, Please Try Again", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }
@@ -200,6 +208,7 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
+                        Toast.makeText(GenreActivity.this, "Error Getting Album, Please Try Again", Toast.LENGTH_SHORT).show();
                         Log.d("ERROR","error => "+error.toString());
                     }
                 }
@@ -287,6 +296,16 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
         Intent intent = new Intent(this, AlbumActivity.class);
         intent.putExtras(extras);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // save data first
+        Intent MainActivityIntent = new Intent(this, MenuActivity.class);
+        extras.putString("AUTHENTICATION", token);
+        MainActivityIntent.putExtras(extras);
+        startActivity(MainActivityIntent);
+        super.onBackPressed();
     }
 
     @Override

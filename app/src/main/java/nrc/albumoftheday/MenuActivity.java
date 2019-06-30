@@ -99,6 +99,7 @@ public class MenuActivity extends AppCompatActivity
                         try {
                             ArrayList<PlaylistInfo> playlistInfos = new ArrayList<>();
                             String playlistID, playlistName, imageURL;
+                            int playlistCount;
                             int i = 0;
                             JSONArray jsonArray = response.getJSONArray("items");
                             try {
@@ -117,10 +118,16 @@ public class MenuActivity extends AppCompatActivity
                                         imageURL = "https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/2d/e6/a7/2de6a7a7-cc1e-49c8-f133-c1c3fbcbdeca/AppIcon-0-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-220-0-0-0-6.png/246x0w.jpg";
                                     }
 
-                                    playlistInfos.add(new PlaylistInfo(playlistName, playlistID, imageURL));
-                                    Log.d("Playlist ID", playlistID);
+                                    JSONObject object3 =  object.getJSONObject("tracks");
+                                    playlistCount = object3.getInt("total");
+
+
+
+                                    playlistInfos.add(new PlaylistInfo(playlistName, playlistID, imageURL, playlistCount));
+                                    //Log.d("Playlist ID", playlistID);
                                     //Log.d("Playlist Name", playlistName);
                                     //Log.d("Playlist Picture", imageURL);
+                                    Log.d("Playlist Song Count", playlistCount +"");
                                     i++;
                                 }
                             }catch(org.json.JSONException o)
