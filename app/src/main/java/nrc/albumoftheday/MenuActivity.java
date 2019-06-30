@@ -118,9 +118,9 @@ public class MenuActivity extends AppCompatActivity
                                     }
 
                                     playlistInfos.add(new PlaylistInfo(playlistName, playlistID, imageURL));
-                                    //Log.d("Playlist ID", playlistID);
+                                    Log.d("Playlist ID", playlistID);
                                     //Log.d("Playlist Name", playlistName);
-                                    Log.d("Playlist Picture", imageURL);
+                                    //Log.d("Playlist Picture", imageURL);
                                     i++;
                                 }
                             }catch(org.json.JSONException o)

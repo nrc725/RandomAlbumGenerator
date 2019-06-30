@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -33,7 +34,22 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
     private RecyclerView.LayoutManager layoutManager;
     private GenreAdapterInterface gai;
 
-    private String[] genreList = {"Rock","Hip Hop","Pop", "Summer","Country","Metal","Workout", "Party","Classical","Jazz", "Gaming","Funk", "Punk"};
+    //To avoid making an api call just to get the image of the genre I got the URLs manually
+    private ArrayList<GenreInfo> genreInfos = new ArrayList<GenreInfo>(){{
+        add(new GenreInfo("Rock","https://t.scdn.co/media/derived/rock_9ce79e0a4ef901bbd10494f5b855d3cc_0_0_274_274.jpg"));
+        add(new GenreInfo("Hip Hop","https://t.scdn.co/media/original/hip-274_0a661854d61e29eace5fe63f73495e68_274x274.jpg"));
+        add(new GenreInfo("Pop","https://t.scdn.co/media/derived/pop-274x274_447148649685019f5e2a03a39e78ba52_0_0_274_274.jpg"));
+        add(new GenreInfo("Summer","https://t.scdn.co/images/8e508d7eb5b843a89c368c9507ecc429.jpeg"));
+        add(new GenreInfo("Country","https://t.scdn.co/images/a2e0ebe2ebed4566ba1d8236b869241f.jpeg"));
+        add(new GenreInfo("Metal","https://t.scdn.co/media/original/metal_27c921443fd0a5ba95b1b2c2ae654b2b_274x274.jpg"));
+        add(new GenreInfo("Workout","https://t.scdn.co/media/links/workout-274x274.jpg"));
+        add(new GenreInfo("Party","https://t.scdn.co/media/links/partyicon_274x274.jpg"));
+        add(new GenreInfo("Classical","https://t.scdn.co/media/derived/classical-274x274_abf78251ff3d90d2ceaf029253ca7cb4_0_0_274_274.jpg"));
+        add(new GenreInfo("Jazz","https://t.scdn.co/media/derived/jazz-274x274_d6f407453a1f43d3163c55cca624a764_0_0_274_274.jpg"));
+        add(new GenreInfo("Gaming","https://t.scdn.co/media/categories/gaming2_274x274.jpg"));
+        add(new GenreInfo("Funk","https://t.scdn.co/images/f4f0987fcab446fcaa7173acb5e25701.jpeg"));
+        add(new GenreInfo("Punk","https://t.scdn.co/media/derived/punk-274x274_f3f1528ea7bbb60a625da13e3315a40b_0_0_274_274.jpg"));
+    }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +69,14 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
                 genreButtonPress(position);
             }
         };
-        mAdapter = new GenreAdapter(genreList, gai);
+        mAdapter = new GenreAdapter(genreInfos, gai);
         recyclerView.setAdapter(mAdapter);
     }
 
     //Gets a random playlist that is associated with the genre that was selected
     public void genreButtonPress(int position)
     {
-        String genre = genreList[position].replaceAll("\\s+","");
+        String genre = genreInfos.get(position).getGenreName().replaceAll("\\s+","");
         Random random = new Random();
         final String URL = "https://api.spotify.com/v1/browse/categories/" + genre.toLowerCase() + "/playlists?country=US&limit=1&offset=" + random.nextInt(10);
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -267,6 +283,7 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
         extras.putString("ALBUM_REDIRECT_URL", albumRedirectURL);
         extras.putString("ALBUM_NAME", albumName);
         extras.putString("ARTIST_NAME", artistName);
+        extras.putBoolean("IS_PLAYLIST", false);
         Intent intent = new Intent(this, AlbumActivity.class);
         intent.putExtras(extras);
         startActivity(intent);

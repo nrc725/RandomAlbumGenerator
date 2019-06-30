@@ -7,38 +7,20 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundBlack">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="292dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginLeft="38dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="38dp"
-        android:layout_marginRight="38dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:text="@string/selectGenreTextView"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Select a Genre" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/genreSelectionList"
-        android:layout_width="368dp"
-        android:layout_height="520dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="391dp"
+        android:layout_height="601dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginRight="19dp"
+        android:layout_marginBottom="19dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.454" />
 </android.support.constraint.ConstraintLayout>

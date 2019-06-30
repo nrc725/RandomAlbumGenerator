@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ public class AlbumActivity extends AppCompatActivity
     Button button;
     Bundle extras;
     String token, albumURL, albumRedirectURL, artistName, albumName;
+    boolean isPlaylist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +39,7 @@ public class AlbumActivity extends AppCompatActivity
         albumRedirectURL = extras.getString("ALBUM_REDIRECT_URL");
         artistName = extras.getString("ARTIST_NAME");
         albumName = extras.getString("ALBUM_NAME");
+        isPlaylist = extras.getBoolean("IS_PLAYLIST");
 
         //Sets image and text for album
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(albumSelection,5,20, 1, TypedValue.COMPLEX_UNIT_DIP);
@@ -52,9 +55,20 @@ public class AlbumActivity extends AppCompatActivity
 
     public void directToMenuPage(View view)
     {
-        Intent intent = new Intent(this, GenreActivity.class);
-        extras.putString("AUTHENTICATION", token);
-        intent.putExtras(extras);
-        startActivity(intent);
+        if(isPlaylist)
+        {
+            Intent intent = new Intent(this, PlaylistActivity.class);
+            extras.putString("AUTHENTICATION", token);
+            intent.putExtras(extras);
+            startActivity(intent);
+        }
+        else
+        {
+            Intent intent = new Intent(this, GenreActivity.class);
+            extras.putString("AUTHENTICATION", token);
+            intent.putExtras(extras);
+            startActivity(intent);
+        }
     }
+
 }
