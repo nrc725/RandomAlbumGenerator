@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,8 +28,8 @@ public class AlbumActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
         extras = getIntent().getExtras();
-        albumSelection = (TextView) findViewById(R.id.albumSelection);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        albumSelection = (TextView) findViewById(R.id.randomAlbumSelection);
+        imageView = (ImageView) findViewById(R.id.randomAlbumCover);
         button = (Button) findViewById(R.id.button1);
 
         //gets items from bundle

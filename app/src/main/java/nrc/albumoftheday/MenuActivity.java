@@ -5,27 +5,37 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
+
 public class MenuActivity extends AppCompatActivity
 {
-    private String token;
+    private String token, artistName, albumName, albumURL, imageURL, redirectURL;
     private Bundle extras;
+    String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +43,61 @@ public class MenuActivity extends AppCompatActivity
         setContentView(R.layout.activity_menu);
         extras = getIntent().getExtras();
         token = extras.getString("AUTHENTICATION");
+        imageView = (ImageView) findViewById(R.id.curatedAlbumImage);
+
+        if((artistName = extras.getString("ARTIST_NAME")) == null) {
+            final String URL = "http://192.168.1.152/getAlbum.php";
+            RequestQueue queue = Volley.newRequestQueue(this);
+            JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
+                    new Response.Listener<JSONArray>() {
+
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            try {
+                                //takes jsonobject and unwraps it to get to the artist uri and logs it
+                                Log.d("Response", response.toString());
+                                JSONObject object = response.getJSONObject(0);
+                                artistName = object.getString("Artist_Name");
+                                albumName = object.getString("Album_Name");
+                                albumURL = object.getString("Album_URL");
+                                imageURL = object.getString("Image_URL");
+                                redirectURL = object.getString("Redirect_URL");
+                                Picasso.get().load(imageURL).into(imageView);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // TODO Auto-generated method stub
+                            Log.d("ERROR", "error => " + error.toString());
+                        }
+                    }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Authorization", "Bearer " + token);
+                    return params;
+                }
+            };
+            queue.add(getRequest);
+        }
+    }
+
+    public void directToCuratedAlbumPage(View view)
+    {
+        Intent intent = new Intent(this, CuratedAlbumActivity.class);
+        extras.putString("AUTHENTICATION", token);
+        extras.putString("CURATED_ARTIST_NAME", artistName);
+        extras.putString("CURATED_ALBUM_NAME", albumName);
+        extras.putString("CURATED_ALBUM_URL", albumURL);
+        extras.putString("CURATED_IMAGE_URL", imageURL);
+        extras.putString("CURATED_REDIRECT_URL", redirectURL);
+        intent.putExtras(extras);
+        startActivity(intent);
     }
 
     public void onGenreButtonPress(View view)

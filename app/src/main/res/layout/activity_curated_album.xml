@@ -8,7 +8,7 @@
     android:background="@color/backgroundBlack">
 
     <ImageView
-        android:id="@+id/randomAlbumCover"
+        android:id="@+id/curatedAlbumCover"
         android:layout_width="303dp"
         android:layout_height="261dp"
         android:layout_marginStart="82dp"
@@ -23,7 +23,7 @@
         app:srcCompat="@color/backgroundBlack" />
 
     <Button
-        android:id="@+id/openRandomAlbumButton"
+        android:id="@+id/openCuratedAlbumButton"
         android:layout_width="214dp"
         android:layout_height="62dp"
         android:layout_marginStart="110dp"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/randomAlbumSelection" />
+        app:layout_constraintTop_toBottomOf="@+id/curatedAlbumSelection" />
 
     <Button
         android:id="@+id/findANewAlbumButton"
@@ -51,17 +51,17 @@
         android:layout_marginEnd="110dp"
         android:layout_marginRight="110dp"
         android:background="@color/lightGreen"
-        android:onClick="directToMenuPage"
-        android:text="@string/findNewAlbumButton"
+        android:onClick="directToMenuActivity"
+        android:text="@string/returnToMainMenu"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/openRandomAlbumButton" />
+        app:layout_constraintTop_toBottomOf="@+id/openCuratedAlbumButton" />
 
     <TextView
-        android:id="@+id/randomAlbumSelection"
+        android:id="@+id/curatedAlbumSelection"
         android:layout_width="303dp"
         android:layout_height="60dp"
         android:layout_marginStart="82dp"
@@ -75,5 +75,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/randomAlbumCover" />
+        app:layout_constraintTop_toBottomOf="@+id/curatedAlbumCover" />
 </android.support.constraint.ConstraintLayout>

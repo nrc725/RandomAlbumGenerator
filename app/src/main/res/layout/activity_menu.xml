@@ -17,7 +17,7 @@
         android:layout_marginEnd="96dp"
         android:layout_marginRight="96dp"
         android:layout_marginBottom="24dp"
-        android:background="@color/spotifyGreen"
+        android:background="@color/lightGreen"
         android:onClick="onGenreButtonPress"
         android:text="@string/selectGenre"
         android:textColor="@color/white"
@@ -37,7 +37,7 @@
         android:layout_marginEnd="96dp"
         android:layout_marginRight="96dp"
         android:layout_marginBottom="64dp"
-        android:background="@color/spotifyGreen"
+        android:background="@color/lightGreen"
         android:onClick="onPlaylistButtonPress"
         android:text="@string/selectPlaylist"
         android:textColor="@color/white"
@@ -65,5 +65,55 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="366dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginRight="176dp"
+        android:gravity="center"
+        android:text="@string/albumOfTheDay"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/curatedAlbumImage"
+        android:layout_width="303dp"
+        android:layout_height="261dp"
+        android:layout_marginStart="82dp"
+        android:layout_marginLeft="82dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginRight="81dp"
+        android:contentDescription="@string/app_name"
+        android:onClick="directToCuratedAlbumPage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/backgroundBlack" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="295dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:gravity="center"
+        android:onClick="directToCuratedAlbumPage"
+        android:text="@string/tapToLearnMore"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/curatedAlbumImage" />
 
 </android.support.constraint.ConstraintLayout>

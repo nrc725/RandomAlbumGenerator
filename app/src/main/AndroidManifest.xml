@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nrc.albumoftheday">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity  android:name=".LoginActivity"/>
-        <activity  android:name=".TestActivity"/>
+        <activity  android:name=".CuratedAlbumActivity"/>
         <activity  android:name=".GenreActivity"  android:label="Select a Genre"/>
         <activity  android:name=".AlbumActivity"/>
         <activity  android:name=".MenuActivity"/>
@@ -25,6 +27,5 @@
         <activity  android:name="com.spotify.sdk.android.authentication.LoginActivity"/>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

@@ -5,6 +5,9 @@
     <string name="openInSpotifyButton">Open in Spotify</string>
     <string name="findNewAlbumButton">Find A New Album</string>
 
+    <!--String Names: activity_curated_album.xml-->
+    <string name="returnToMainMenu">Return to Main Menu</string>
+
     <!--String Names: activity_main.xml-->
     <string name="loginButton">Login</string>
     <string name="welcomeText">Welcome to the Random Album Generator!</string>
@@ -15,6 +18,8 @@
     <string name="selectGenreTextView">Select a Genre</string>
 
     <!--String Names: activity_menu.xml-->
+    <string name="albumOfTheDay">Curated Album of The Day</string>
+    <string name="tapToLearnMore">Tap on the Cover to Learn More!</string>
     <string name="selectOptionTextView">Select an Album using:</string>
     <string name="selectGenre">Genre</string>
     <string name="selectPlaylist">User Playlist</string>
