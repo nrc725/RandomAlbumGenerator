@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nrc.albumoftheday">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,5 +25,5 @@
         <activity  android:name="com.spotify.sdk.android.authentication.LoginActivity"/>
     </application>
 
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

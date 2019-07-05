@@ -36,21 +36,40 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
     private RecyclerView.LayoutManager layoutManager;
     private GenreAdapterInterface gai;
 
-    //To avoid making an api call just to get the image of the genre I got the URLs manually
+    //To avoid making an api call just to get the images of all the genres I got the URLs manually
     private ArrayList<GenreInfo> genreInfos = new ArrayList<GenreInfo>(){{
-        add(new GenreInfo("Rock","https://t.scdn.co/media/derived/rock_9ce79e0a4ef901bbd10494f5b855d3cc_0_0_274_274.jpg"));
-        add(new GenreInfo("Hip Hop","https://t.scdn.co/media/original/hip-274_0a661854d61e29eace5fe63f73495e68_274x274.jpg"));
-        add(new GenreInfo("Pop","https://t.scdn.co/media/derived/pop-274x274_447148649685019f5e2a03a39e78ba52_0_0_274_274.jpg"));
-        add(new GenreInfo("Summer","https://t.scdn.co/images/8e508d7eb5b843a89c368c9507ecc429.jpeg"));
-        add(new GenreInfo("Country","https://t.scdn.co/images/a2e0ebe2ebed4566ba1d8236b869241f.jpeg"));
-        add(new GenreInfo("Metal","https://t.scdn.co/media/original/metal_27c921443fd0a5ba95b1b2c2ae654b2b_274x274.jpg"));
-        add(new GenreInfo("Workout","https://t.scdn.co/media/links/workout-274x274.jpg"));
-        add(new GenreInfo("Party","https://t.scdn.co/media/links/partyicon_274x274.jpg"));
+        add(new GenreInfo("Blues","https://t.scdn.co/media/derived/icon-274x274_aeeb8eb70c80e2b701b25425390a1737_0_0_274_274.jpg"));
+        add(new GenreInfo("Chill","https://t.scdn.co/media/derived/chill-274x274_4c46374f007813dd10b37e8d8fd35b4b_0_0_274_274.jpg"));
+        add(new GenreInfo("Christian","https://t.scdn.co/images/6359655809534407b31a728fe262dc3a.jpeg"));
         add(new GenreInfo("Classical","https://t.scdn.co/media/derived/classical-274x274_abf78251ff3d90d2ceaf029253ca7cb4_0_0_274_274.jpg"));
-        add(new GenreInfo("Jazz","https://t.scdn.co/media/derived/jazz-274x274_d6f407453a1f43d3163c55cca624a764_0_0_274_274.jpg"));
-        add(new GenreInfo("Gaming","https://t.scdn.co/media/categories/gaming2_274x274.jpg"));
+        add(new GenreInfo("Comedy","https://t.scdn.co/media/derived/comedy-274x274_d07fcbc1202f00f8684f37742d0a4f2f_0_0_274_274.jpg"));
+        add(new GenreInfo("Country","https://t.scdn.co/images/a2e0ebe2ebed4566ba1d8236b869241f.jpeg"));
+        add(new GenreInfo("Decades","https://t.scdn.co/media/derived/decades_9ad8e458242b2ac8b184e79ef336c455_0_0_274_274.jpg"));
+        add(new GenreInfo("Dinner","https://t.scdn.co/media/original/dinner_1b6506abba0ba52c54e6d695c8571078_274x274.jpg"));
+        add(new GenreInfo("EDM/Dance","https://t.scdn.co/media/derived/edm-274x274_0ef612604200a9c14995432994455a6d_0_0_274_274.jpg"));
+        add(new GenreInfo("Focus","https://t.scdn.co/media/original/genre-images-square-274x274_5e50d72b846a198fcd2ca9b3aef5f0c8_274x274.jpg"));
         add(new GenreInfo("Funk","https://t.scdn.co/images/f4f0987fcab446fcaa7173acb5e25701.jpeg"));
+        add(new GenreInfo("Gaming","https://t.scdn.co/media/categories/gaming2_274x274.jpg"));
+        add(new GenreInfo("Hip Hop","https://t.scdn.co/media/original/hip-274_0a661854d61e29eace5fe63f73495e68_274x274.jpg"));
+        add(new GenreInfo("Indie_Alt","https://t.scdn.co/images/7fe0f2c9c91f45a3b6bae49d298201a4.jpeg"));
+        add(new GenreInfo("Jazz","https://t.scdn.co/media/derived/jazz-274x274_d6f407453a1f43d3163c55cca624a764_0_0_274_274.jpg"));
+        add(new GenreInfo("K Pop","https://t.scdn.co/images/69c728f3bd9643a5ab0f4ef5a79919f1.jpeg"));
+        add(new GenreInfo("Latin","https://t.scdn.co/media/derived/latin-274x274_befbbd1fbb8e045491576e317cb16cdf_0_0_274_274.jpg"));
+        add(new GenreInfo("Metal","https://t.scdn.co/media/original/metal_27c921443fd0a5ba95b1b2c2ae654b2b_274x274.jpg"));
+        add(new GenreInfo("Mood","https://t.scdn.co/media/original/mood-274x274_976986a31ac8c49794cbdc7246fd5ad7_274x274.jpg"));
+        add(new GenreInfo("Party","https://t.scdn.co/media/links/partyicon_274x274.jpg"));
+        add(new GenreInfo("Pop","https://t.scdn.co/media/derived/pop-274x274_447148649685019f5e2a03a39e78ba52_0_0_274_274.jpg"));
+        add(new GenreInfo("Pride","https://t.scdn.co/images/90f4c163-46f6-4cda-bd84-e78ff90d4959.jpg"));
         add(new GenreInfo("Punk","https://t.scdn.co/media/derived/punk-274x274_f3f1528ea7bbb60a625da13e3315a40b_0_0_274_274.jpg"));
+        add(new GenreInfo("Rock","https://t.scdn.co/media/derived/rock_9ce79e0a4ef901bbd10494f5b855d3cc_0_0_274_274.jpg"));
+        add(new GenreInfo("Romance","https://t.scdn.co/media/derived/romance-274x274_8100794c94847b6d27858bed6fa4d91b_0_0_274_274.jpg"));
+        add(new GenreInfo("Roots","https://t.scdn.co/media/links/partyicon_274x274.jpg"));
+        add(new GenreInfo("RnB","https://t.scdn.co/media/derived/r-b-274x274_fd56efa72f4f63764b011b68121581d8_0_0_274_274.jpg"));
+        add(new GenreInfo("Sleep","https://t.scdn.co/media/derived/sleep-274x274_0d4f836af8fab7bf31526968073e671c_0_0_274_274.jpg"));
+        add(new GenreInfo("Soul","https://t.scdn.co/media/derived/soul-274x274_266bc900b35dda8956380cffc73a4d8c_0_0_274_274.jpg"));
+        add(new GenreInfo("Summer","https://t.scdn.co/images/8e508d7eb5b843a89c368c9507ecc429.jpeg"));
+        add(new GenreInfo("Top Lists","https://t.scdn.co/media/derived/toplists_11160599e6a04ac5d6f2757f5511778f_0_0_275_275.jpg"));
+        add(new GenreInfo("Workout","https://t.scdn.co/media/links/workout-274x274.jpg"));
     }};
 
     @Override
