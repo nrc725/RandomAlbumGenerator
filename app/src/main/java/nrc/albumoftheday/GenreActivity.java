@@ -213,7 +213,7 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
                             int totalAlbums = response.getInt("total");
                             Log.d("total album count", totalAlbums+"");
                             JSONArray jarray = response.getJSONArray("items");
-                            JSONObject object = jarray.getJSONObject(random.nextInt(totalAlbums)+1);
+                            JSONObject object = jarray.getJSONObject(random.nextInt(totalAlbums));
                             String albumURI = object.getString("id");
                             Log.d("Album URI", albumURI);
                             getAlbumInfo(albumURI);

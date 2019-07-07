@@ -129,7 +129,7 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistAdapt
                             Log.d("total album count", totalAlbums+"");
                             //takes jsonobject and unwraps it to get to the album uri
                             JSONArray jarray = response.getJSONArray("items");
-                            JSONObject object = jarray.getJSONObject(random.nextInt(totalAlbums)+1);
+                            JSONObject object = jarray.getJSONObject(random.nextInt(totalAlbums));
                             String albumURI = object.getString("id");
                             Log.d("Album URI", albumURI);
                             getAlbumInfo(albumURI);
