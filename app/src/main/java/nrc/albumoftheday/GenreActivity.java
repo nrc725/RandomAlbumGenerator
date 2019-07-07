@@ -195,11 +195,10 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
         queue.add(getRequest);
     }
 
-    //IF THE OFFSET IS TOO LARGE IT WILL NOT SHOW AN ALBUM, SPOTIFY DOESNT KEEP ALBUM COUNTS FOR ARTISTS SO I CANT CHECK TO MAKE SURE THIS CAN BE PREVENTED
     public void selectArtistAlbum(String artistURI)
     {
         Random random = new Random();
-        final String URL ="https://api.spotify.com/v1/artists/" + artistURI + "/albums?include_groups=album&market=US&limit=1&offset=" + (random.nextInt(5)+1);
+        final String URL = "https://api.spotify.com/v1/artists/"+ artistURI + "/albums?include_groups=album&market=US&limit=50&offset=0";
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
@@ -211,8 +210,10 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
                        Log.d("Artist Album Response", response.toString());
                        try {
                             //takes jsonobject and unwraps it to get to the album uri
+                            int totalAlbums = response.getInt("total");
+                            Log.d("total album count", totalAlbums+"");
                             JSONArray jarray = response.getJSONArray("items");
-                            JSONObject object = jarray.getJSONObject(0);
+                            JSONObject object = jarray.getJSONObject(random.nextInt(totalAlbums)+1);
                             String albumURI = object.getString("id");
                             Log.d("Album URI", albumURI);
                             getAlbumInfo(albumURI);

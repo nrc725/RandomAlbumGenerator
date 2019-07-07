@@ -113,7 +113,7 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistAdapt
     public void selectArtistAlbum(String artistURI)
     {
         Random random = new Random();
-        final String URL ="https://api.spotify.com/v1/artists/" + artistURI + "/albums?market=US&limit=1&offset=" + (random.nextInt(10)+1);
+        final String URL = "https://api.spotify.com/v1/artists/"+ artistURI + "/albums?include_groups=album&market=US&limit=50&offset=0";
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL,null,
@@ -124,9 +124,12 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistAdapt
                     public void onResponse(JSONObject response) {
                         Log.d("Artist Album Response", response.toString());
                         try {
+                            int totalAlbums = response.getInt("total");
+
+                            Log.d("total album count", totalAlbums+"");
                             //takes jsonobject and unwraps it to get to the album uri
                             JSONArray jarray = response.getJSONArray("items");
-                            JSONObject object = jarray.getJSONObject(0);
+                            JSONObject object = jarray.getJSONObject(random.nextInt(totalAlbums)+1);
                             String albumURI = object.getString("id");
                             Log.d("Album URI", albumURI);
                             getAlbumInfo(albumURI);
