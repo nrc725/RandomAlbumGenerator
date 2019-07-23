@@ -41,13 +41,10 @@ public class MenuActivity extends AppCompatActivity
         extras = getIntent().getExtras();
         token = extras.getString("AUTHENTICATION");
         imageView = (ImageView) findViewById(R.id.curatedAlbumImage);
-
-        if((artistName = extras.getString("ARTIST_NAME")) == null) {
-            final String URL = "http://192.168.1.152/getAlbum.php";
-            RequestQueue queue = Volley.newRequestQueue(this);
-            JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
-                    new Response.Listener<JSONArray>() {
-
+        final String URL = "http://192.168.1.152/getAlbum.php";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
                             try {
@@ -81,7 +78,6 @@ public class MenuActivity extends AppCompatActivity
                 }
             };
             queue.add(getRequest);
-        }
     }
 
     public void directToCuratedAlbumPage(View view)

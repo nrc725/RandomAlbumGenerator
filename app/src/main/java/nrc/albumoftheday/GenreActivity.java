@@ -40,21 +40,21 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
     private ArrayList<GenreInfo> genreInfos = new ArrayList<GenreInfo>(){{
         add(new GenreInfo("Blues","https://t.scdn.co/media/derived/icon-274x274_aeeb8eb70c80e2b701b25425390a1737_0_0_274_274.jpg"));
         add(new GenreInfo("Chill","https://t.scdn.co/media/derived/chill-274x274_4c46374f007813dd10b37e8d8fd35b4b_0_0_274_274.jpg"));
-        add(new GenreInfo("Christian","https://t.scdn.co/images/6359655809534407b31a728fe262dc3a.jpeg"));
         add(new GenreInfo("Classical","https://t.scdn.co/media/derived/classical-274x274_abf78251ff3d90d2ceaf029253ca7cb4_0_0_274_274.jpg"));
         add(new GenreInfo("Comedy","https://t.scdn.co/media/derived/comedy-274x274_d07fcbc1202f00f8684f37742d0a4f2f_0_0_274_274.jpg"));
         add(new GenreInfo("Country","https://t.scdn.co/images/a2e0ebe2ebed4566ba1d8236b869241f.jpeg"));
         add(new GenreInfo("Decades","https://t.scdn.co/media/derived/decades_9ad8e458242b2ac8b184e79ef336c455_0_0_274_274.jpg"));
         add(new GenreInfo("Dinner","https://t.scdn.co/media/original/dinner_1b6506abba0ba52c54e6d695c8571078_274x274.jpg"));
-        add(new GenreInfo("EDM/Dance","https://t.scdn.co/media/derived/edm-274x274_0ef612604200a9c14995432994455a6d_0_0_274_274.jpg"));
-        add(new GenreInfo("Focus","https://t.scdn.co/media/original/genre-images-square-274x274_5e50d72b846a198fcd2ca9b3aef5f0c8_274x274.jpg"));
+        add(new GenreInfo("EDM_Dance","https://t.scdn.co/media/derived/edm-274x274_0ef612604200a9c14995432994455a6d_0_0_274_274.jpg"));
+        //add(new GenreInfo("Focus","https://t.scdn.co/media/original/genre-images-square-274x274_5e50d72b846a198fcd2ca9b3aef5f0c8_274x274.jpg"));
         add(new GenreInfo("Funk","https://t.scdn.co/images/f4f0987fcab446fcaa7173acb5e25701.jpeg"));
         add(new GenreInfo("Gaming","https://t.scdn.co/media/categories/gaming2_274x274.jpg"));
         add(new GenreInfo("Hip Hop","https://t.scdn.co/media/original/hip-274_0a661854d61e29eace5fe63f73495e68_274x274.jpg"));
         add(new GenreInfo("Indie_Alt","https://t.scdn.co/images/7fe0f2c9c91f45a3b6bae49d298201a4.jpeg"));
+        add(new GenreInfo("Inspirational","https://t.scdn.co/images/6359655809534407b31a728fe262dc3a.jpeg"));
         add(new GenreInfo("Jazz","https://t.scdn.co/media/derived/jazz-274x274_d6f407453a1f43d3163c55cca624a764_0_0_274_274.jpg"));
         add(new GenreInfo("K Pop","https://t.scdn.co/images/69c728f3bd9643a5ab0f4ef5a79919f1.jpeg"));
-        add(new GenreInfo("Latin","https://t.scdn.co/media/derived/latin-274x274_befbbd1fbb8e045491576e317cb16cdf_0_0_274_274.jpg"));
+        //add(new GenreInfo("Latin","https://t.scdn.co/media/derived/latin-274x274_befbbd1fbb8e045491576e317cb16cdf_0_0_274_274.jpg"));
         add(new GenreInfo("Metal","https://t.scdn.co/media/original/metal_27c921443fd0a5ba95b1b2c2ae654b2b_274x274.jpg"));
         add(new GenreInfo("Mood","https://t.scdn.co/media/original/mood-274x274_976986a31ac8c49794cbdc7246fd5ad7_274x274.jpg"));
         add(new GenreInfo("Party","https://t.scdn.co/media/links/partyicon_274x274.jpg"));
@@ -207,19 +207,43 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapterInte
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        int randomNum = 0;
                        Log.d("Artist Album Response", response.toString());
                        try {
                             //takes jsonobject and unwraps it to get to the album uri
                             int totalAlbums = response.getInt("total");
+                            randomNum = random.nextInt(totalAlbums);
                             Log.d("total album count", totalAlbums+"");
                             JSONArray jarray = response.getJSONArray("items");
-                            JSONObject object = jarray.getJSONObject(random.nextInt(totalAlbums));
+                            JSONObject object = jarray.getJSONObject(randomNum);
                             String albumURI = object.getString("id");
                             Log.d("Album URI", albumURI);
                             getAlbumInfo(albumURI);
-                        } catch (JSONException e) {
-                           Toast.makeText(GenreActivity.this, "Error Getting Album, Please Try Again", Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
+                        } catch (JSONException e)
+                       {
+                           if(randomNum > 50)
+                           {
+                               try{
+                                   int totalAlbums = response.getInt("total");
+                                   Log.d("total album count", totalAlbums+"");
+                                   JSONArray jarray = response.getJSONArray("items");
+                                   JSONObject object = jarray.getJSONObject( random.nextInt(50));
+                                   String albumURI = object.getString("id");
+                                   Log.d("Album URI", albumURI);
+                                   getAlbumInfo(albumURI);
+                               }
+                               catch(JSONException e2)
+                               {
+                                   Toast.makeText(GenreActivity.this, "Error Getting Album, Please Try Again", Toast.LENGTH_SHORT).show();
+                                   e2.printStackTrace();
+                               }
+
+                           }
+                           else
+                           {
+                               Toast.makeText(GenreActivity.this, "Error Getting Album, Please Try Again", Toast.LENGTH_SHORT).show();
+                               e.printStackTrace();
+                           }
                         }
                     }
                 },
